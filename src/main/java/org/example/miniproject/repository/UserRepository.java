@@ -1,0 +1,11 @@
+package org.example.miniproject.repository;
+
+import org.example.miniproject.model.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends MongoRepository<User, String> {
+
+    Optional<User> findByEmail(String email);
+}
