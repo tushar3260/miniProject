@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComplainHub — Smart Complaint Tracker</title>
+    <meta name="description" content="ComplainHub - A modern complaint tracking and management system">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- AUTH SCREENS -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <div class="auth-left">
+                <div class="brand-hero">
+                    <div class="brand-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect width="48" height="48" rx="14" fill="url(#grad1)"/>
+                            <path d="M14 24L20 30L34 16" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs><linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#6C5CE7"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs>
+                        </svg>
+                    </div>
+                    <h1 class="brand-title">ComplainHub</h1>
+                    <p class="brand-subtitle">Smart Complaint Tracking System</p>
+                    <div class="brand-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">📋</div>
+                            <div>
+                                <h4>Track Complaints</h4>
+                                <p>Submit and monitor complaints in real-time</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div>
+                                <h4>Fast Resolution</h4>
+                                <p>Streamlined workflow for quick resolution</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div>
+                                <h4>Status Updates</h4>
+                                <p>Real-time status tracking & notifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-right">
+                <!-- Login Form -->
+                <div id="login-form" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <p class="auth-desc">Sign in to your account</p>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+                    </div>
+                    <button id="login-btn" class="btn-primary" onclick="handleLogin()">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader" style="display:none;"></span>
+                    </button>
+                    <p class="auth-switch">Don't have an account? <a href="#" onclick="showRegister()">Sign Up</a></p>
+                </div>
+                <!-- Register Form -->
+                <div id="register-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <p class="auth-desc">Join ComplainHub today</p>
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" placeholder="Create a strong password">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-role">Role</label>
+                        <select id="reg-role">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                    </div>
+                    <button id="register-btn" class="btn-primary" onclick="handleRegister()">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader" style="display:none;"></span>
+                    </button>
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard-screen" class="screen">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="sidebar-logo">
+                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                        <rect width="48" height="48" rx="14" fill="url(#grad2)"/>
+                        <path d="M14 24L20 30L34 16" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs><linearGradient id="grad2" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#6C5CE7"/><stop offset="1" stop-color="#A855F7"/></linearGradient></defs>
+                    </svg>
+                </div>
+                <span class="sidebar-title">ComplainHub</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="switchTab('dashboard')" id="nav-dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('complaints')" id="nav-complaints">
+                    <span class="nav-icon">📋</span>
+                    <span class="nav-text">My Complaints</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('new-complaint')" id="nav-new">
+                    <span class="nav-icon">➕</span>
+                    <span class="nav-text">New Complaint</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('all-complaints')" id="nav-all">
+                    <span class="nav-icon">📁</span>
+                    <span class="nav-text">All Complaints</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">T</div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-name-display">User</span>
+                        <span class="user-role" id="user-role-display">USER</span>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="handleLogout()" title="Logout">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="search-input" placeholder="Search complaints..." oninput="handleSearch()">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Tab -->
+            <div id="tab-dashboard" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card stat-total">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-total">0</span>
+                            <span class="stat-label">Total Complaints</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-open">
+                        <div class="stat-icon">🔴</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-open">0</span>
+                            <span class="stat-label">Open</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-progress">
+                        <div class="stat-icon">🟡</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-progress">0</span>
+                            <span class="stat-label">In Progress</span>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-resolved">
+                        <div class="stat-icon">🟢</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="stat-resolved">0</span>
+                            <span class="stat-label">Resolved</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-header">
+                    <h3>Recent Complaints</h3>
+                </div>
+                <div class="complaints-table-wrap">
+                    <table class="complaints-table" id="recent-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-tbody"></tbody>
+                    </table>
+                    <div class="empty-state" id="recent-empty" style="display:none;">
+                        <div class="empty-icon">📭</div>
+                        <h4>No complaints yet</h4>
+                        <p>Create your first complaint to get started</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Complaints Tab -->
+            <div id="tab-complaints" class="tab-content">
+                <div class="filter-bar">
+                    <button class="filter-btn active" onclick="filterMyComplaints('ALL')">All</button>
+                    <button class="filter-btn" onclick="filterMyComplaints('OPEN')">Open</button>
+                    <button class="filter-btn" onclick="filterMyComplaints('IN_PROGRESS')">In Progress</button>
+                    <button class="filter-btn" onclick="filterMyComplaints('RESOLVED')">Resolved</button>
+                    <button class="filter-btn" onclick="filterMyComplaints('CLOSED')">Closed</button>
+                </div>
+                <div class="complaints-grid" id="my-complaints-grid"></div>
+                <div class="empty-state" id="my-empty" style="display:none;">
+                    <div class="empty-icon">📭</div>
+                    <h4>No complaints found</h4>
+                    <p>You haven't filed any complaints yet</p>
+                    <button class="btn-primary btn-sm" onclick="switchTab('new-complaint')">Create Complaint</button>
+                </div>
+            </div>
+
+            <!-- New Complaint Tab -->
+            <div id="tab-new-complaint" class="tab-content">
+                <div class="form-card">
+                    <h3>Submit New Complaint</h3>
+                    <p class="form-desc">Fill in the details below to submit a new complaint</p>
+                    <div class="form-group">
+                        <label for="complaint-title">Title</label>
+                        <input type="text" id="complaint-title" placeholder="Brief title of your complaint">
+                    </div>
+                    <div class="form-group">
+                        <label for="complaint-category">Category</label>
+                        <select id="complaint-category">
+                            <option value="">Select a category</option>
+                            <option value="MAINTENANCE">🔧 Maintenance</option>
+                            <option value="ELECTRICAL">⚡ Electrical</option>
+                            <option value="PLUMBING">🚰 Plumbing</option>
+                            <option value="CLEANLINESS">🧹 Cleanliness</option>
+                            <option value="SECURITY">🔒 Security</option>
+                            <option value="NETWORK">🌐 Network / IT</option>
+                            <option value="OTHER">📦 Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="complaint-desc">Description</label>
+                        <textarea id="complaint-desc" rows="5" placeholder="Describe your complaint in detail..."></textarea>
+                    </div>
+                    <button class="btn-primary" onclick="submitComplaint()" id="submit-complaint-btn">
+                        <span class="btn-text">Submit Complaint</span>
+                        <span class="btn-loader" style="display:none;"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- All Complaints Tab (Admin) -->
+            <div id="tab-all-complaints" class="tab-content">
+                <div class="filter-bar">
+                    <button class="filter-btn active" onclick="filterAllComplaints('ALL')">All</button>
+                    <button class="filter-btn" onclick="filterAllComplaints('OPEN')">Open</button>
+                    <button class="filter-btn" onclick="filterAllComplaints('IN_PROGRESS')">In Progress</button>
+                    <button class="filter-btn" onclick="filterAllComplaints('RESOLVED')">Resolved</button>
+                    <button class="filter-btn" onclick="filterAllComplaints('CLOSED')">Closed</button>
+                </div>
+                <div class="complaints-table-wrap">
+                    <table class="complaints-table" id="all-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>User ID</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="all-tbody"></tbody>
+                    </table>
+                    <div class="empty-state" id="all-empty" style="display:none;">
+                        <div class="empty-icon">📭</div>
+                        <h4>No complaints found</h4>
+                        <p>No complaints match the selected filter</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div class="modal-overlay" id="status-modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Update Complaint Status</h3>
+                <button class="modal-close" onclick="closeStatusModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-complaint-title"></p>
+                <div class="form-group">
+                    <label for="new-status">New Status</label>
+                    <select id="new-status">
+                        <option value="OPEN">🔴 Open</option>
+                        <option value="IN_PROGRESS">🟡 In Progress</option>
+                        <option value="RESOLVED">🟢 Resolved</option>
+                        <option value="CLOSED">⚫ Closed</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeStatusModal()">Cancel</button>
+                <button class="btn-primary btn-sm" onclick="updateComplaintStatus()">Update Status</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
